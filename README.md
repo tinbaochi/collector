@@ -2,7 +2,7 @@
 
 Ứng dụng **local-first** (chạy trên máy Windows) tổng hợp điểm tin báo chí theo **cấu hình địa bàn** (mặc định: ngành xây dựng TP.HCM; tạo thêm Hà Nội, Đà Nẵng… hoặc sao chép cấu hình có sẵn): thu thập bài từ các báo cấu hình, ghi **sổ ứng viên** cho mọi link phát hiện (không bỏ sót âm thầm), bóc tách toàn văn có kiểm tra độ đầy đủ, duyệt biên tập, và xuất PowerPoint.
 
-- **Trang web (cùng giao diện bản local, dữ liệu thật):** https://tinbaochi.github.io/collector/ – thu thập tự động mỗi giờ (bật/tắt theo từng cấu hình) hoặc bấm Thu thập; duyệt tin theo nhóm. Xem [deploy/README.md](deploy/README.md), [cloud/README.md](cloud/README.md)
+- **Trang web (cùng giao diện bản local, dữ liệu thật):** https://tinbaochi.github.io/ – thu thập tự động mỗi giờ (bật/tắt theo từng cấu hình) hoặc bấm Thu thập; duyệt tin theo nhóm. Xem [deploy/README.md](deploy/README.md), [cloud/README.md](cloud/README.md)
 - Mọi cấu hình (nguồn tin, RSS/sitemap/chuyên mục, từ khóa, quy tắc AND/OR/NOT, địa bàn, khung giờ, giới hạn quét, mẫu báo cáo…) **chỉnh trong giao diện Cài đặt**. Không cần sửa JSON.
 
 > **Trạng thái:** MVP. Xem [PROGRESS.md](PROGRESS.md) và [ACCEPTANCE_REPORT.md](ACCEPTANCE_REPORT.md). Xuất PPTX theo **mẫu gốc của Sở (từ Skill, mặc định)** hoặc 4 mẫu thiết kế riêng (Hành chính trang trọng, Bản tin hiện đại, Tối giản, Ảnh lớn) – chọn khi xuất – và PDF; đã kiểm tra bằng Microsoft PowerPoint và LibreOffice. Tin cùng sự kiện từ nhiều báo được gộp thành một tin nhiều nguồn.
@@ -14,7 +14,7 @@ Yêu cầu: [Node.js LTS](https://nodejs.org) (≥ 20). Xuất PDF: tự dùng *
 Mẫu báo cáo: mẫu Sở từ Skill có sẵn (`web/public/templates/`); chọn mẫu mặc định ở **Cài đặt › Báo cáo & mẫu**, hoặc tải mẫu riêng cùng cấu trúc.
 
 ```powershell
-git clone https://github.com/tinbaochi/collector.git
+git clone https://github.com/tinbaochi/tinbaochi.github.io.git
 cd collector
 scripts\install-local.cmd      # npm install
 scripts\start-local.cmd        # build giao diện + chạy tại http://127.0.0.1:5178

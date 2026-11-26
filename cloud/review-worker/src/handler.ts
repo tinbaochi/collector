@@ -34,7 +34,7 @@ export interface Env {
   ALLOWED_ORIGINS: string; // comma separated
   /** fine-grained PAT (this repo only, Actions: read & write) – lets reviewers start an on-demand collection */
   GITHUB_TOKEN?: string;
-  GITHUB_REPO?: string; // e.g. tinbaochi/collector
+  GITHUB_REPO?: string; // e.g. tinbaochi/tinbaochi.github.io
   COLLECT_WORKFLOW?: string; // e.g. pages.yml
 }
 
@@ -457,7 +457,7 @@ async function profileRoutes(req: Request, url: URL, env: Env, h: Record<string,
 /* ---------------- page proxy for "Dò nguồn" / "Thử nguồn" on the web ---------------- */
 const FETCH_MAX_BYTES = 3_000_000;
 const FETCH_TIMEOUT_MS = 15_000;
-const FETCH_UA = 'NewsReporter/1.0 (editorial source test; +https://tinbaochi.github.io/collector/)';
+const FETCH_UA = 'NewsReporter/1.0 (editorial source test; +https://tinbaochi.github.io/)';
 /** public web pages only: http(s), default ports, no IP literals of private / local ranges, no localhost */
 export function publicPageUrl(raw: string): URL | null {
   let u: URL;

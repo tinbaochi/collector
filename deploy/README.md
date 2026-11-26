@@ -1,6 +1,6 @@
 # Cấu hình cho bộ thu thập trên mây (GitHub Actions → GitHub Pages)
 
-Trang https://tinbaochi.github.io/collector/ hiển thị **dữ liệu thật**, thu thập tự động **mỗi giờ** bởi workflow `.github/workflows/pages.yml` (`scripts/cloud-collect.ts`).
+Trang https://tinbaochi.github.io/ hiển thị **dữ liệu thật**, thu thập tự động **mỗi giờ** bởi workflow `.github/workflows/pages.yml` (`scripts/cloud-collect.ts`).
 
 - Mặc định dùng nguồn tin, từ khóa, quy tắc từ Skill gốc (giống bản local khi mới cài).
 - Muốn bản web dùng đúng cấu hình bạn đã chỉnh ở bản local: mở **Cài đặt › Sao lưu & lịch sử › Tải bản sao lưu**, đổi tên tệp thành `deploy/config.json`, commit và push. Lần chạy kế tiếp sẽ dùng cấu hình đó.

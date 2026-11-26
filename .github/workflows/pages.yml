@@ -67,9 +67,9 @@ jobs:
           REVIEW_API_URL: ${{ vars.REVIEW_API_URL }} # shared configuration edited on the web (Cài đặt)
         run: |
           if [ -n "$REQ_FROM" ]; then
-            npx tsx scripts/cloud-collect.ts --site "https://tinbaochi.github.io/collector/" --out web/public/live --from "$REQ_FROM" --to "$REQ_TO" --requested-by "$REQ_BY" --scheduled "$REQ_SLOT" --profile "${REQ_PROFILE:-hcm}"
+            npx tsx scripts/cloud-collect.ts --site "https://tinbaochi.github.io/" --out web/public/live --from "$REQ_FROM" --to "$REQ_TO" --requested-by "$REQ_BY" --scheduled "$REQ_SLOT" --profile "${REQ_PROFILE:-hcm}"
           else
-            npx tsx scripts/cloud-collect.ts --site "https://tinbaochi.github.io/collector/" --out web/public/live
+            npx tsx scripts/cloud-collect.ts --site "https://tinbaochi.github.io/" --out web/public/live
           fi
       - run: npm run build:pages
         env:

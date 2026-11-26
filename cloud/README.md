@@ -28,7 +28,7 @@ Báo ──▶ GitHub Actions: thu thập ──▶ GitHub Pages (một bản we
 - Còn khác bản local: dò/thử nguồn và "quét lại từng nguồn" cần mạng trực tiếp từ máy → chỉ ở bản local; trên web bấm **Thu thập** để quét lại cả khung giờ.
 
 ## Gửi cho người duyệt
-- Link: https://tinbaochi.github.io/collector/
+- Link: https://tinbaochi.github.io/
 - Tài khoản: quản trị viên tạo cho từng người ở **Cài đặt › Tài khoản** (tên đăng nhập + mật khẩu, vai trò Người duyệt / Quản trị); gửi mật khẩu riêng. Mã truy cập dùng chung đã bỏ từ 21/11/2026.
 - Hướng dẫn ngắn: bấm **Đăng nhập duyệt tin** → nhập tên đăng nhập + mật khẩu → ở tab *Bài sẵn sàng* và *Cần kiểm tra* bấm **✓ Liên quan / ✗ Không**; mở **Xem chi tiết** để sửa *lĩnh vực*, *tính chất* và ghi *góp ý*; ở *Sổ ứng viên* bấm **Thực ra liên quan?** cho tin bị loại nhầm.
 

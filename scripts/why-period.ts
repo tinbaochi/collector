@@ -8,7 +8,7 @@ import { annotateArticle } from '../src/domain/relevance.js';
 import { classifyCategory } from '../src/domain/classify.js';
 
 const arg = (k: string, d: string) => (process.argv.includes(k) ? process.argv[process.argv.indexOf(k) + 1]! : d);
-const SITE = arg('--site', 'https://tinbaochi.github.io/collector/');
+const SITE = arg('--site', 'https://tinbaochi.github.io/');
 const PROFILE = arg('--profile', 'hcm');
 const API = arg('--review-api', process.env.REVIEW_API_URL ?? '');
 const KEY = arg('--key', '');

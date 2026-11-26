@@ -24,7 +24,7 @@ class MemKV implements KVLike {
 }
 const env = {
   REVIEWS: new MemKV(), EXPORT_TOKEN: 'test-export-token', ALLOWED_ORIGINS: 'https://tinbaochi.github.io',
-  GITHUB_TOKEN: 'fake', GITHUB_REPO: 'tinbaochi/collector', COLLECT_WORKFLOW: 'pages.yml',
+  GITHUB_TOKEN: 'fake', GITHUB_REPO: 'tinbaochi/tinbaochi.github.io', COLLECT_WORKFLOW: 'pages.yml',
 };
 
 // accounts for the UI tests: duyet-a … duyet-z ("Người duyệt A" … "Z", admins so the older tests may change settings), nguoi-duyet (a plain reviewer), all password test-pass; admin (admin-pass)
@@ -123,7 +123,7 @@ const fakeGitHub = async (url: string, init?: RequestInit): Promise<Response> =>
     const { inputs } = JSON.parse(String(init?.body));
     const auto = inputs.trigger === 'auto';
     const title = inputs.trigger === 'schedule' ? `${AUTO_TITLE} ${inputs.slot} – ${inputs.from} → ${inputs.to} [${inputs.profile}]` : auto ? AUTO_TITLE : `Thu thập theo yêu cầu ${inputs.from} → ${inputs.to} (${inputs.requested_by})`;
-    const run = { id: runs.length + 1, status: 'in_progress', conclusion: null as string | null, created_at: new Date().toISOString(), updated_at: '', event: 'workflow_dispatch', display_title: title, html_url: 'https://github.com/tinbaochi/collector/actions' };
+    const run = { id: runs.length + 1, status: 'in_progress', conclusion: null as string | null, created_at: new Date().toISOString(), updated_at: '', event: 'workflow_dispatch', display_title: title, html_url: 'https://github.com/tinbaochi/tinbaochi.github.io/actions' };
     runs.unshift(run);
     setTimeout(() => {
       if (!auto && inputs.trigger !== 'schedule') publishCustom(inputs.from, inputs.to, inputs.requested_by); // scheduled runs only occupy the server here
@@ -165,7 +165,7 @@ createServer(async (req, res) => {
   }
   // a scheduled run (worker cron) that publishes a new period when it finishes – the open page must pick it up by itself
   if (req.url === '/__scheduled-run') {
-    const run = { id: runs.length + 1, status: 'in_progress', conclusion: null as string | null, created_at: new Date().toISOString(), updated_at: '', event: 'workflow_dispatch', display_title: `${AUTO_TITLE} 16:30 – 2026-11-10T08:01+07:00 → 2026-11-10T16:30+07:00 [hcm]`, html_url: 'https://github.com/tinbaochi/collector/actions' };
+    const run = { id: runs.length + 1, status: 'in_progress', conclusion: null as string | null, created_at: new Date().toISOString(), updated_at: '', event: 'workflow_dispatch', display_title: `${AUTO_TITLE} 16:30 – 2026-11-10T08:01+07:00 → 2026-11-10T16:30+07:00 [hcm]`, html_url: 'https://github.com/tinbaochi/tinbaochi.github.io/actions' };
     runs.unshift(run);
     setTimeout(() => {
       publishCustom('2026-11-10T08:01+07:00', '2026-11-10T16:30+07:00', '', '16:30');
@@ -176,7 +176,7 @@ createServer(async (req, res) => {
     return res.end('ok');
   }
   if (req.url === '/__deploy') {
-    const run = { id: runs.length + 1, status: 'in_progress', conclusion: null as string | null, created_at: new Date().toISOString(), updated_at: '', event: 'push', display_title: 'Live data – collection & GitHub Pages deploy', html_url: 'https://github.com/tinbaochi/collector/actions' };
+    const run = { id: runs.length + 1, status: 'in_progress', conclusion: null as string | null, created_at: new Date().toISOString(), updated_at: '', event: 'push', display_title: 'Live data – collection & GitHub Pages deploy', html_url: 'https://github.com/tinbaochi/tinbaochi.github.io/actions' };
     runs.unshift(run);
     setTimeout(() => ((run.status = 'completed'), (run.conclusion = 'success')), 6000);
     res.writeHead(200);

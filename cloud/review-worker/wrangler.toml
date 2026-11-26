@@ -9,7 +9,7 @@ crons = ["2-59/5 * * * *"] # :02, :07 … – the fixed times 08:00 / 16:30 run 
 
 [vars]
 ALLOWED_ORIGINS = "https://tinbaochi.github.io,https://bccuong.github.io" # old address kept while the redirect page lives there
-GITHUB_REPO = "tinbaochi/collector"
+GITHUB_REPO = "tinbaochi/tinbaochi.github.io"
 COLLECT_WORKFLOW = "pages.yml"
 
 # KV namespace id is filled in by `npx wrangler kv namespace create REVIEWS` (see cloud/README.md)
@@ -27,4 +27,4 @@ binding = "REVIEWS"
 id = "229cb5fc8b7a4474a199d2b025c71c35"
 
 # Secrets (never committed): npx wrangler secret put EXPORT_TOKEN / GITHUB_TOKEN
-# GITHUB_TOKEN = fine-grained PAT, repository tinbaochi/collector only, permission "Actions: Read and write"
+# GITHUB_TOKEN = fine-grained PAT, repository tinbaochi/tinbaochi.github.io only, permission "Actions: Read and write"

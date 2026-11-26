@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tin báo chí</title>
+<script>
+  // the site moved from /collector/ to the root (26/11/2026): old links keep working
+  (function () {
+    var p = location.pathname;
+    if (p === '/collector' || p.indexOf('/collector/') === 0) {
+      location.replace('/' + p.replace(/^\/collector\/?/, '') + location.search + location.hash);
+    }
+  })();
+</script>
+<style>body{font-family:system-ui,sans-serif;margin:0;padding:48px 16px;text-align:center;background:#f8fafc;color:#334155}a{color:#0f766e}</style>
+</head>
+<body>
+<p>Không tìm thấy trang này.</p>
+<p><a href="/">Về trang tin báo chí</a></p>
+</body>
+</html>

@@ -10,7 +10,7 @@ import { suggestFilter, statusOf, type Judged } from '../src/domain/suggest.js';
 import { scoreStory, trainModel } from '../src/domain/learn.js';
 
 const arg = (k: string, d: string) => (process.argv.includes(k) ? process.argv[process.argv.indexOf(k) + 1]! : d);
-const SITE = arg('--site', 'https://tinbaochi.github.io/collector/');
+const SITE = arg('--site', 'https://tinbaochi.github.io/');
 const DRY = process.argv.includes('--dry-run');
 const API = (process.env.REVIEW_API_URL ?? '').replace(/\/$/, '');
 const TOKEN = process.env.EXPORT_TOKEN ?? '';

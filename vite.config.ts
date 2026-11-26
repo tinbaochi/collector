@@ -5,7 +5,7 @@ import { existsSync } from 'node:fs';
 
 export default defineConfig(({ mode }) => ({
   root: path.resolve(__dirname, 'web'),
-  base: mode === 'pages' ? '/collector/' : '/',
+  base: '/',
   plugins: [react()],
   // static GitHub Pages build runs the in-browser demo API (no secrets involved)
   // live mode when the cloud collector produced real data (web/public/live/profiles.json, one folder per profile), demo fixtures otherwise

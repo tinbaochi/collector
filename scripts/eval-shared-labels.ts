@@ -1,7 +1,7 @@
 /**
  * Analyse the team's review labels (labels/labels.json) against what the collector decided (published live/<date>.json):
  * precision/recall by majority vote, sector + assessment confusion, reviewer agreement and notes.
- * Usage: npx tsx scripts/eval-shared-labels.ts [--site https://tinbaochi.github.io/collector/] [--profile hcm]
+ * Usage: npx tsx scripts/eval-shared-labels.ts [--site https://tinbaochi.github.io/] [--profile hcm]
  */
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -10,7 +10,7 @@ import type { ReviewDecision } from '../src/domain/schemas.js';
 
 interface L { reportDate: string; articleId: string; title: string; sourceId: string; reviewer: string; label: 'relevant' | 'irrelevant' | null; category: string | null; assessment: string | null; note: string }
 const i = process.argv.indexOf('--site');
-const SITE = i > 0 ? process.argv[i + 1]! : 'https://tinbaochi.github.io/collector/';
+const SITE = i > 0 ? process.argv[i + 1]! : 'https://tinbaochi.github.io/';
 const j = process.argv.indexOf('--profile');
 const PROFILE = j > 0 ? process.argv[j + 1]! : 'hcm';
 const labels = (JSON.parse(readFileSync('labels/labels.json', 'utf8')) as { labels: L[] }).labels;

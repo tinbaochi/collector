@@ -291,7 +291,7 @@ describe('shared review worker', () => {
       if (url.includes('/runs?status=')) return new Response(JSON.stringify({ total_count: 0 }), { status: 200 });
       return new Response('{}', { status: 200, headers: exp });
     };
-    const genv = (): Env => ({ ...env(), GITHUB_TOKEN: 'github_pat_' + 'S'.repeat(40) + 'srvr', GITHUB_REPO: 'tinbaochi/collector', COLLECT_WORKFLOW: 'pages.yml' });
+    const genv = (): Env => ({ ...env(), GITHUB_TOKEN: 'github_pat_' + 'S'.repeat(40) + 'srvr', GITHUB_REPO: 'tinbaochi/tinbaochi.github.io', COLLECT_WORKFLOW: 'pages.yml' });
     const post = (e: Env, token: string, code = ADMIN) => handle(new Request('https://w.example/token', { method: 'POST', headers: { origin: ORIGIN, 'x-review-code': code, 'content-type': 'application/json' }, body: JSON.stringify({ token, reviewer: 'Cường' }) }), e, gh);
     it('checked before saving, never sent back, then used for status / collection; expiry shown', async () => {
       const e = genv();
@@ -300,7 +300,7 @@ describe('shared review worker', () => {
       expect(((await (await post(e, REVOKED)).json()) as { error: string }).error).toMatch(/không nhận khóa/);
       expect(((await (await post(e, NOPERM)).json()) as { error: string }).error).toMatch(/Actions: Read and write/);
       // the permission probe dispatches to a branch that does not exist: nothing can run
-      expect(used.filter((u) => u.includes('/dispatches'))).toEqual(['POST https://api.github.com/repos/tinbaochi/collector/actions/workflows/pages.yml/dispatches noPm']);
+      expect(used.filter((u) => u.includes('/dispatches'))).toEqual(['POST https://api.github.com/repos/tinbaochi/tinbaochi.github.io/actions/workflows/pages.yml/dispatches noPm']);
       const ok = await post(e, GOOD);
       expect(ok.status).toBe(200);
       const body = await ok.text();

@@ -3,11 +3,17 @@
 ## Current status
 - Specification: v1.2
 - Milestones: **M0 DONE · M1 DONE · M2 DONE · M5 DONE (original template; PDF via Microsoft PowerPoint or LibreOffice, visually inspected)** · M3/M4 mostly done · M6 partial
-- Repository: https://github.com/tinbaochi/collector (moved from bccuong/news-reporter on 20/11/2026; branch `main`, public) · Live site: https://tinbaochi.github.io/collector/ (real data, scheduled collection editable on the web + on-demand "Thu thập")
-- Last session: 2026-11-21 (session 14v) – shared access code retired, accounts only
+- Repository: https://github.com/tinbaochi/tinbaochi.github.io (renamed from tinbaochi/collector on 26/11/2026; branch `main`, public) · Live site: https://tinbaochi.github.io/ (real data, scheduled collection editable on the web + on-demand "Thu thập")
+- Last session: 2026-11-26 (session 14w) – site served at the root https://tinbaochi.github.io/
 - The user (GitHub `bccuong`) has authorised commits/pushes to this repo and GitHub Pages/Actions for this project.
 
-## ▶ RESUME HERE (session 14v – shared access code retired; 2026-11-21)
+## ▶ RESUME HERE (session 14w – site at the root; 2026-11-26)
+- User approved: repo tinbaochi/collector renamed to tinbaochi/tinbaochi.github.io (organisation site → served at https://tinbaochi.github.io/). vite base '/' for every mode; --site defaults, pages.yml, wrangler GITHUB_REPO, docs, tests, fake worker updated. web/public/404.html sends /collector/<rest>?q#h → /<rest>?q#h. git remote updated.
+- Tests: typecheck OK, vitest 203/203, test:ui:live 20/20 (base /). Commit 858ebcd pushed; Pages run 45748342194 success; Pages build_type=workflow at https://tinbaochi.github.io/. Worker 3e5cc244 deployed (GITHUB_REPO new name); /status 200, token not rejected (expires 2027-11-21).
+- Live (Edge): / shows the app; /collector/ and /collector/?x=1#h redirect to / with query+hash; bccuong.github.io/news-reporter/ still arrives (via /collector/ → /, two hops; its redirect repo was not edited).
+- Not verified yet: a real dispatch after the rename (needs a collection run). Next step: after the next scheduled run (16:30), check that it appears in tinbaochi/tinbaochi.github.io Actions and the period is published on https://tinbaochi.github.io/.
+
+## (history) Session 14v – shared access code retired; 2026-11-21)
 - All team members have accounts (user confirmed). Worker: only account sessions are accepted (`sessionOf`); the ACCESS_CODE branch and `Env.ACCESS_CODE` removed (cloud/review-worker/src/handler.ts, accounts.ts). Web (web/src/api.ts): a browser still holding the old code drops it at start-up and shows "Đăng nhập duyệt tin"; role no longer guessed from the code. Docs: cloud/README.md, wrangler.toml.
 - Also recorded here (commits after 14u): roles (system-wide changes admin only, e58d807), my votes follow the account to other devices (b9be5e4, 05a6471).
 - Tests: typecheck OK, vitest 203/203 (admin session seeded in env(); shared code → 401 even if the secret is still set), test:ui:live 19/19 + new "shared access code retired" test PASS.

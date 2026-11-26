@@ -1,5 +1,10 @@
 # ACCEPTANCE_REPORT — Evidence log (2026-11-16, session 13 update)
 
+## Session 14w changes in status (2026-11-26)
+| ID | Status | Evidence |
+|---|---|---|
+| Web site at the root URL (https://tinbaochi.github.io/), old links kept | PASS | Repo renamed to tinbaochi.github.io; Pages run 45748342194 success; Edge on the live site: / app shown, /collector/ and /collector/?x=1#h → / (query + hash kept), bccuong.github.io/news-reporter/ → /; worker 3e5cc244 /status 200 with token accepted; test:ui:live 20/20 with base /. Scheduled dispatch after the rename not yet observed. |
+
 ## Session 14v changes in status (2026-11-21)
 | ID | Status | Evidence |
 |---|---|---|

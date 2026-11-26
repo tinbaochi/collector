@@ -642,15 +642,15 @@ export function App() {
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1500px] items-center gap-2 px-3 py-2 sm:gap-3 sm:px-4">
+        <div className="mx-auto flex max-w-[1500px] items-center gap-1.5 px-3 py-2 sm:gap-3 sm:px-4">
           <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" aria-hidden="true" className="h-9 w-9 shrink-0 rounded-xl shadow-sm" data-testid="app-logo" />
           <h1 className="hidden max-w-[22rem] truncate text-[15px] font-bold text-navy-800 md:block" data-testid="app-subtitle" title={settings?.report.subtitle ?? ''}>
             {settings?.report.subtitle || 'Điểm tin báo chí'}
           </h1>
           {profiles && (
-            <div className="relative ml-1 shrink-0" title="Địa bàn (cấu hình) – tạo mới/sao chép trong Cài đặt">
+            <div className="relative min-w-0 shrink sm:ml-1 sm:shrink-0" title="Địa bàn (cấu hình) – tạo mới/sao chép trong Cài đặt">
               <MapPin className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-teal-600" />
-              <select className="cursor-pointer appearance-none rounded-full border border-slate-200 bg-slate-50 py-1.5 pl-7 pr-7 text-sm font-semibold text-slate-800 transition hover:border-teal-400" aria-label="Cấu hình (profile)" value={profiles.activeId} onChange={(e) => switchProfile(e.target.value)}>
+              <select className="w-full max-w-[9rem] cursor-pointer appearance-none truncate rounded-full sm:max-w-none border border-slate-200 bg-slate-50 py-1.5 pl-7 pr-7 text-sm font-semibold text-slate-800 transition hover:border-teal-400" aria-label="Cấu hình (profile)" value={profiles.activeId} onChange={(e) => switchProfile(e.target.value)}>
                 {profiles.profiles.map((p) => (
                   <option key={p.id} value={p.id}>{p.name}</option>
                 ))}
@@ -687,7 +687,7 @@ export function App() {
           )}
           <span className="flex-1" />
           {/* one status dot instead of banners: live / demo / online, details on hover */}
-          <span className="inline-flex shrink-0 items-center gap-2 rounded-full px-2 py-1 text-xs text-slate-500" title={api.mode === 'live' ? `DỮ LIỆU THẬT – ${autoTimes ? `tự động thu thập lúc ${autoTimes}` : 'tự động thu thập đang TẮT (chỉ thu thập khi bấm Thu thập)'}${live ? ` · cập nhật lúc ${formatVn(live.generatedAt)}` : ''}` : api.mode === 'demo' ? 'BẢN DEMO – dữ liệu mẫu thử, không phải tin thật' : online ? 'Có Internet' : 'Ngoại tuyến – xem/duyệt/xuất dữ liệu đã lưu'} data-testid="live-banner">
+          <span className="inline-flex shrink-0 items-center gap-2 rounded-full px-1 py-1 text-xs text-slate-500 sm:px-2" title={api.mode === 'live' ? `DỮ LIỆU THẬT – ${autoTimes ? `tự động thu thập lúc ${autoTimes}` : 'tự động thu thập đang TẮT (chỉ thu thập khi bấm Thu thập)'}${live ? ` · cập nhật lúc ${formatVn(live.generatedAt)}` : ''}` : api.mode === 'demo' ? 'BẢN DEMO – dữ liệu mẫu thử, không phải tin thật' : online ? 'Có Internet' : 'Ngoại tuyến – xem/duyệt/xuất dữ liệu đã lưu'} data-testid="live-banner">
             <span className={`h-2.5 w-2.5 rounded-full ${!online ? 'bg-slate-400' : api.mode === 'demo' ? 'bg-amber-500' : 'dot-live bg-green-500'}`} />
             <span className="hidden lg:inline">{api.mode === 'live' && live ? <>Cập nhật <b className="font-semibold text-slate-700">{hhmm(live.generatedAt)}</b></> : !online ? 'Ngoại tuyến' : api.mode === 'demo' ? 'Bản demo' : 'Trực tuyến'}</span>
             <span className="sr-only">{api.mode === 'live' ? `DỮ LIỆU THẬT – ${autoTimes ? `tự động thu thập lúc ${autoTimes}` : 'tự động thu thập đang TẮT (chỉ thu thập khi bấm Thu thập)'}${live ? ` · cập nhật lúc ${formatVn(live.generatedAt)}` : ''}` : api.mode === 'demo' ? 'BẢN DEMO – dữ liệu mẫu thử, không phải tin thật' : online ? 'Có Internet' : 'Ngoại tuyến – xem/duyệt/xuất dữ liệu đã lưu'}</span>
@@ -706,7 +706,7 @@ export function App() {
                 <LogIn className="h-4 w-4" /> <span className="hidden sm:inline">Đăng nhập</span>
               </button>
             ))}
-          <button className="btn-ghost shrink-0 rounded-full px-2.5" onClick={() => setQrOpen(true)} aria-label="Tạo mã QR" title="Tạo mã QR từ một địa chỉ bất kỳ (để chèn vào slide)" data-testid="qr-open">
+          <button className="btn-ghost hidden shrink-0 rounded-full px-2.5 sm:inline-flex" onClick={() => setQrOpen(true)} aria-label="Tạo mã QR" title="Tạo mã QR từ một địa chỉ bất kỳ (để chèn vào slide)" data-testid="qr-open">
             <QrCode className="h-4 w-4" /> <span className="hidden xl:inline">QR</span>
           </button>
           <button className="btn-ghost shrink-0 rounded-full px-2.5" onClick={() => setSettingsOpen(true)} aria-label="Cài đặt" title="Cài đặt">
@@ -806,23 +806,23 @@ export function App() {
           </div>
         ) : (
           <>
-            <nav className="flex flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1" aria-label="Các mục">
+            <nav className="grid grid-cols-3 gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 sm:flex sm:flex-wrap" aria-label="Các mục">
               {(
                 [
-                  ['articles', 'Bài sẵn sàng', ready.length, CheckCircle2, 'bg-green-600 text-white', 'text-green-700'],
-                  ['review', 'Cần kiểm tra', reviewQueue.length, AlertTriangle, reviewQueue.length ? 'bg-amber-500 text-white' : 'bg-slate-300 text-slate-700', 'text-amber-600'],
-                  ['export', 'Xuất báo cáo', selected, FileText, selected ? 'bg-navy-700 text-white' : 'bg-slate-300 text-slate-700', 'text-navy-700'],
+                  ['articles', 'Bài sẵn sàng', ready.length, CheckCircle2, 'bg-green-600 text-white', 'text-green-700', 'Sẵn sàng'],
+                  ['review', 'Cần kiểm tra', reviewQueue.length, AlertTriangle, reviewQueue.length ? 'bg-amber-500 text-white' : 'bg-slate-300 text-slate-700', 'text-amber-600', 'Kiểm tra'],
+                  ['export', 'Xuất báo cáo', selected, FileText, selected ? 'bg-navy-700 text-white' : 'bg-slate-300 text-slate-700', 'text-navy-700', 'Xuất'],
                 ] as const
-              ).map(([k, l, n, Icon, badge, ic]) => (
+              ).map(([k, l, n, Icon, badge, ic, short]) => (
                 <button
                   key={k}
                   onClick={() => setTab(k)}
                   aria-current={tab === k ? 'page' : undefined}
                   aria-label={n !== null ? `${l} (${n})` : l}
-                  className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition ${tab === k ? 'bg-navy-700 text-white shadow-md' : 'text-slate-600 hover:bg-white hover:text-slate-900'}`}
+                  className={`flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg px-1.5 py-2 text-sm font-semibold transition sm:min-h-0 sm:justify-start sm:gap-2 sm:px-4 ${tab === k ? 'bg-navy-700 text-white shadow-md' : 'text-slate-600 hover:bg-white hover:text-slate-900'}`}
                 >
-                  <Icon className={`h-4 w-4 ${tab === k ? 'text-white' : ic}`} />
-                  {l}
+                  <Icon className={`hidden h-4 w-4 sm:block ${tab === k ? 'text-white' : ic}`} />
+                  <span className="short-label" data-short={short}>{l}</span>
                   {n !== null && (
                     <>
                       <span className="sr-only"> (</span>
@@ -1097,9 +1097,9 @@ function DateTime24({ label, value, onChange }: { label: string; value: string; 
   return (
     // "Từ ngày [date]  Giờ [hh]:[mm]"
     <fieldset role="group" aria-label={label} className="flex items-end gap-2">
-      <label>
+      <label className="min-w-0 flex-1 sm:flex-none">
         <span className="label">{label} ngày</span>
-        <input type="date" className="input w-40" aria-label={`${label} – ngày`} value={d} onChange={(e) => set(e.target.value, h, m)} />
+        <input type="date" className="input min-w-0 sm:w-40" aria-label={`${label} – ngày`} value={d} onChange={(e) => set(e.target.value, h, m)} />
       </label>
       <div>
       <span className="label">Giờ</span>
@@ -1476,10 +1476,11 @@ function ArticleList({ list, excluded = [], reviews, cands, settings, onInspect,
   return (
     <div>
       <div className="mb-2 flex flex-wrap items-center gap-2">
-        <div className="relative">
-          <Search className="absolute left-2 top-2 h-3.5 w-3.5 text-slate-400" />
-          <input className="input w-72 pl-7" placeholder="Tìm tiêu đề…" value={q} onChange={(e) => setQ(e.target.value)} />
+        <div className="relative min-w-0 flex-1 sm:flex-none">
+          <Search className="absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+          <input className="input pl-7 sm:w-72" type="search" placeholder="Tìm tiêu đề…" value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
+        <div className="scroll-row -mx-3 order-last flex w-[calc(100%+1.5rem)] gap-1.5 px-3 pb-0.5 sm:order-none sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0 [&>button]:shrink-0" data-testid="cat-filters">
         <button className={`chip ${cat === 'all' ? 'border-navy-700 bg-navy-700 text-white' : 'border-slate-300 bg-white'}`} onClick={() => setCat('all')}>Tất cả</button>
         {settings?.categories.filter((c) => c.enabled).map((c) => (
           <button key={c.code} className={`chip ${cat === c.code ? catStyle(c.code).solid + ' shadow-sm' : 'border-slate-300 bg-white hover:bg-slate-50'}`} onClick={() => setCat(cat === c.code ? 'all' : c.code)} aria-pressed={cat === c.code} data-testid={`cat-filter-${c.code}`}>
@@ -1488,7 +1489,8 @@ function ArticleList({ list, excluded = [], reviews, cands, settings, onInspect,
             {catCount.get(c.code) ? <span className="tabular-nums opacity-70">{catCount.get(c.code)}</span> : null}
           </button>
         ))}
-        <button className="btn-ghost btn-xs ml-auto" onClick={() => setNewestFirst((v) => !v)} title="Đổi thứ tự theo giờ đăng" data-testid="sort-toggle">
+        </div>
+        <button className="btn-ghost btn-xs sm:ml-auto" onClick={() => setNewestFirst((v) => !v)} title="Đổi thứ tự theo giờ đăng" data-testid="sort-toggle">
           {newestFirst ? <ArrowDown className="h-3.5 w-3.5" /> : <ArrowUp className="h-3.5 w-3.5" />} {newestFirst ? 'Mới nhất trước' : 'Cũ nhất trước'}
         </button>
       </div>
@@ -1560,15 +1562,15 @@ function ArticleList({ list, excluded = [], reviews, cands, settings, onInspect,
           // the photo chosen in Biên tập (null = "Không dùng ảnh"), else the article's first photo
           const img = r?.primaryImageUrl === null ? undefined : r?.primaryImageUrl ? { url: r.primaryImageUrl } : a.imageCandidates[0];
           return (
-            <article key={a.id} className={`card animate-in flex gap-3 p-3 transition-shadow hover:shadow-md ${r?.included ? 'ring-2 ring-teal-500' : ''}`}>
-              <label className="flex flex-col items-center gap-1 pt-1 text-[10px] text-slate-500">
+            <article key={a.id} className={`card animate-in flex gap-2.5 p-3 transition-shadow sm:gap-3 hover:shadow-md ${r?.included ? 'ring-2 ring-teal-500' : ''}`}>
+              <label className="flex flex-col items-center gap-1 pt-0.5 text-[10px] text-slate-500 sm:pt-1">
                 <input type="checkbox" className="h-5 w-5" disabled={!!r?.groupId} title={r?.groupId ? 'Bài đã gộp làm nguồn phụ của tin khác' : ''} checked={!!r?.included && !r?.groupId} onChange={(e) => onPatch(a.id, { included: e.target.checked, order: r?.order ?? Date.now() % 1e6 })} aria-label={`Chọn bài ${a.title}`} />
-                chọn
+                <span className="hidden sm:inline">chọn</span>
               </label>
               {img ? (
-                <img src={img.url} alt="" loading="lazy" referrerPolicy="no-referrer" className="h-20 w-28 shrink-0 rounded bg-slate-100 object-cover" onError={(e) => ((e.target as HTMLImageElement).style.visibility = 'hidden')} />
+                <img src={img.url} alt="" loading="lazy" referrerPolicy="no-referrer" className="hidden h-20 w-28 shrink-0 rounded bg-slate-100 object-cover sm:block" onError={(e) => ((e.target as HTMLImageElement).style.visibility = 'hidden')} />
               ) : (
-                <div className="flex h-20 w-28 shrink-0 items-center justify-center rounded bg-slate-100 text-[10px] text-slate-400">{r?.primaryImageUrl === null ? 'không dùng ảnh' : 'không có ảnh'}</div>
+                <div className="hidden h-20 w-28 shrink-0 items-center justify-center rounded bg-slate-100 text-[10px] text-slate-400 sm:flex">{r?.primaryImageUrl === null ? 'không dùng ảnh' : 'không có ảnh'}</div>
               )}
               <div className="min-w-0 flex-1">
                 <div className="mb-1 flex flex-wrap items-center gap-1 text-xs">
@@ -1588,6 +1590,7 @@ function ArticleList({ list, excluded = [], reviews, cands, settings, onInspect,
                   {r && !r.groupId && secondariesOf(a.id, reviews).length > 0 && <span className="chip border-purple-300 bg-purple-50 text-purple-800">+{secondariesOf(a.id, reviews).length} nguồn</span>}
                   {a.extractionWarnings.length > 0 && <span className="chip border-amber-300 bg-amber-50 text-amber-800"><AlertTriangle className="h-3 w-3" /> {a.extractionWarnings.length} cảnh báo</span>}
                 </div>
+                {img && <img src={img.url} alt="" loading="lazy" referrerPolicy="no-referrer" className="float-right mb-1 ml-2 h-16 w-24 rounded bg-slate-100 object-cover sm:hidden" onError={(e) => ((e.target as HTMLImageElement).style.display = 'none')} />}
                 <h3 className="font-semibold leading-snug">
                   <a className="group hover:text-teal-700 hover:underline" href={a.canonicalUrl ?? a.originalUrl} target="_blank" rel="noreferrer" title={`Mở bài gốc (tab mới): ${a.canonicalUrl ?? a.originalUrl}`} data-testid="story-title-link">
                     {r?.title ?? a.title}
@@ -1596,10 +1599,10 @@ function ArticleList({ list, excluded = [], reviews, cands, settings, onInspect,
                 </h3>
                 <p className="line-clamp-2 text-sm text-slate-600">{r?.summary ?? a.sapo}</p>
                 {reviewMode && c?.reasonDetail && <p className="mt-1 text-xs text-amber-800">Lý do: {c.reasonDetail}</p>}
-                <div className="mt-2 flex flex-wrap items-center gap-1 border-t border-slate-100 pt-2" data-testid="story-actions">
-                  <button className="btn-ghost btn-xs" onClick={() => onInspect(a.id)}><FileText className="h-3.5 w-3.5" /> Xem chi tiết</button>
-                  <button className={`btn-ghost btn-xs ${why.has(a.id) ? 'border-amber-300 bg-amber-50 text-amber-900' : ''}`} onClick={() => toggleWhy(a.id)} aria-expanded={why.has(a.id)} aria-label={`Vì sao bài này được lấy: ${a.title}`} title="Bài khớp tiêu chí nào: địa bàn, từ khóa, lĩnh vực, tính chất">
-                    <Lightbulb className="h-3.5 w-3.5" /> Vì sao?
+                <div className="clear-both mt-2 flex flex-wrap items-center gap-1 border-t border-slate-100 pt-2" data-testid="story-actions">
+                  <button className="btn-ghost btn-xs order-1 sm:order-none" onClick={() => onInspect(a.id)}><FileText className="h-3.5 w-3.5" /> <span className="short-label" data-short="Chi tiết">Xem chi tiết</span></button>
+                  <button className={`btn-ghost btn-xs order-1 sm:order-none ${why.has(a.id) ? 'border-amber-300 bg-amber-50 text-amber-900' : ''}`} onClick={() => toggleWhy(a.id)} aria-expanded={why.has(a.id)} aria-label={`Vì sao bài này được lấy: ${a.title}`} title="Bài khớp tiêu chí nào: địa bàn, từ khóa, lĩnh vực, tính chất">
+                    <Lightbulb className="h-3.5 w-3.5" /> <span className="short-label" data-short="">Vì sao?</span>
                   </button>
                   <RelevanceButtons r={r} onPatch={(p) => onPatch(a.id, p)} title={a.title} votes={votes?.[a.id]} />
                   {reviewMode && (
@@ -1617,7 +1620,7 @@ function ArticleList({ list, excluded = [], reviews, cands, settings, onInspect,
                       duyệt chung: {r.sharedBy}{r.sharedAt ? ` · ${formatVn(r.sharedAt)}` : ''}
                     </span>
                   )}
-                  <RemoveButton className={r?.sharedBy ? '' : 'ml-auto'} title={a.title} onRemove={(reason) => onPatch(a.id, { excludedByEditor: true, included: false, excludeReason: reason })} />
+                  <RemoveButton className={`order-2 sm:order-none ${r?.sharedBy ? '' : 'ml-auto'}`} title={a.title} onRemove={(reason) => onPatch(a.id, { excludedByEditor: true, included: false, excludeReason: reason })} />
                 </div>
                 {why.has(a.id) && <MatchWhy a={a} reason={reviewMode ? c?.reasonDetail : null} />}
               </div>

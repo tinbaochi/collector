@@ -396,7 +396,7 @@ test('web review is ONE for the whole team: what A selects / moves / removes on 
   const review1 = await n(reviewTab(a));
   const t3 = (await a.locator('article').first().locator('h3').innerText()).trim();
   await a.locator('article').first().getByRole('button', { name: /Chuyển sang Bài sẵn sàng/ }).click();
-  await expect(reviewTab(a)).toHaveText(`Cần kiểm tra (${review1 - 1})`);
+  await expect(reviewTab(a)).toHaveAttribute("aria-label", `Cần kiểm tra (${review1 - 1})`);
   const readyA = (await readyTab(a).getAttribute("aria-label")) ?? "";
   const reviewA = (await reviewTab(a).getAttribute("aria-label")) ?? "";
   const exportA = (await a.getByRole('button', { name: /^Xuất báo cáo/ }).getAttribute("aria-label")) ?? "";
@@ -406,8 +406,8 @@ test('web review is ONE for the whole team: what A selects / moves / removes on 
   const b = await (await browser.newContext()).newPage();
   await b.goto('');
   await b.waitForLoadState('networkidle');
-  await expect(readyTab(b)).toHaveText(readyA); // the same lists on the other machine
-  await expect(reviewTab(b)).toHaveText(reviewA);
+  await expect(readyTab(b)).toHaveAttribute("aria-label", readyA); // the same lists on the other machine
+  await expect(reviewTab(b)).toHaveAttribute("aria-label", reviewA);
   await expect(b.getByRole('button', { name: /^Xuất báo cáo/ })).toHaveText(exportA);
   const s1 = b.locator('article').filter({ hasText: t1 });
   await expect(s1.getByLabel(/^Chọn bài/)).toBeChecked();
@@ -852,4 +852,34 @@ test('shared access code retired (21/11/2026): a browser still holding the old c
   expect(await page.evaluate(() => localStorage.getItem('hcm-demo:reviewer'))).toBe('null');
   // the worker refuses the code itself
   expect((await request.get('http://127.0.0.1:5181/me', { headers: { 'x-review-code': 'HCM-TEST-CODE' } })).status()).toBe(401);
+});
+
+test('phone layout (390 px): nothing wider than the screen; Settings = list of sections → one section full screen → back (26/11/2026)', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: 'vi-VN', timezoneId: 'Asia/Ho_Chi_Minh' });
+  const page = await ctx.newPage();
+  await page.goto('');
+  await login(page, 'Người duyệt P');
+  await expect(page.getByTestId('reviewer-chip')).toBeVisible();
+  const width = () => page.evaluate(() => document.documentElement.scrollWidth);
+  expect(await width()).toBeLessThanOrEqual(390);
+  // the three tabs share one row
+  const tabs = page.getByRole('navigation', { name: 'Các mục' }).getByRole('button');
+  const ys = await tabs.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+  expect(new Set(ys).size).toBe(1);
+  // settings: the list first, a section opens full width, "Các mục" goes back
+  await page.getByRole('button', { name: 'Cài đặt', exact: true }).click();
+  const nav = page.getByTestId('settings-nav');
+  await expect(nav).toBeVisible();
+  await nav.getByRole('button', { name: 'Nguồn tin', exact: true }).click();
+  await expect(nav).toBeHidden();
+  await expect(page.getByTestId('settings-back')).toContainText('Nguồn tin');
+  expect(await width()).toBeLessThanOrEqual(390);
+  await page.getByTestId('settings-back').click();
+  await expect(nav).toBeVisible();
+  // accounts as cards on phones
+  await nav.getByRole('button', { name: 'Tài khoản', exact: true }).click();
+  await expect(page.getByTestId('users-list')).toContainText('duyet-p');
+  await expect(page.getByTestId('users-table')).toBeHidden();
+  expect(await width()).toBeLessThanOrEqual(390);
+  await ctx.close();
 });

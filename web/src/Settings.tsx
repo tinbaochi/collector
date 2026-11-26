@@ -1,4 +1,4 @@
-import { CheckCircle, ChevronDown, ChevronRight, Download, FileUp, History, Info, MapPin, Minus, Plus, Sparkles, RotateCcw, Save, Search, SlidersHorizontal, Tag, Trash2, Users, X } from 'lucide-react';
+import { CheckCircle, ChevronDown, ChevronLeft, ChevronRight, Download, FileUp, History, Info, MapPin, Minus, Plus, Sparkles, RotateCcw, Save, Search, SlidersHorizontal, Tag, Trash2, Users, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { defaultSettings } from '../../src/domain/defaults';
 import { detectLocation } from '../../src/domain/location';
@@ -43,7 +43,13 @@ export function SettingsDrawer({ open, onClose, onSaved, initialSection }: { ope
   const [saved, setSaved] = useState<{ s: Settings; src: Source[] } | null>(null);
   const [s, setS] = useState<Settings | null>(null);
   const [src, setSrc] = useState<Source[]>([]);
-  const [nav, setNav] = useState<NavKey>(initialSection ?? 'sources');
+  const [nav, setNavState] = useState<NavKey>(initialSection ?? 'sources');
+  /** phones: 'list' = the sections, 'detail' = one section full screen (md and wider show both) */
+  const [pane, setPane] = useState<'list' | 'detail'>(initialSection ? 'detail' : 'list');
+  const setNav = (k: NavKey) => {
+    setNavState(k);
+    setPane('detail');
+  };
   const [filter, setFilter] = useState('');
   const [saving, setSaving] = useState(false);
   const [advanced, setAdvancedState] = useState(readAdvanced);
@@ -76,6 +82,8 @@ export function SettingsDrawer({ open, onClose, onSaved, initialSection }: { ope
   }, [open]);
   useEffect(() => {
     if (initialSection && open) setNav(initialSection);
+    else if (open) setPane('list');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialSection, open]);
 
   const dirtyS = !!s && !!saved && JSON.stringify(s) !== JSON.stringify(saved.s);
@@ -150,29 +158,30 @@ export function SettingsDrawer({ open, onClose, onSaved, initialSection }: { ope
   // advanced sections are listed when the switch is on, while searching, or when one of them is open
   const showAdvanced = advanced || !!filter || ADVANCED.includes(nav);
   const navBtn = ([k, l]: (typeof NAV)[number]) => (
-    <button key={k} onClick={() => setNav(k)} className={`mb-0.5 flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-sm transition ${nav === k ? 'bg-navy-700 text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'}`}>
+    <button key={k} onClick={() => setNav(k)} className={`mb-0.5 flex w-full items-center gap-2 rounded-lg px-3 py-3 text-left text-[15px] transition md:px-2.5 md:py-1.5 md:text-sm ${nav === k ? 'md:bg-navy-700 md:text-white md:shadow-sm' : ''} text-slate-700 hover:bg-slate-100 ${nav === k ? 'md:hover:bg-navy-700' : ''}`}>
       {l}
       {k === 'suggest' && sugCount > 0 && <span className="ml-auto min-w-[1.25rem] rounded-full bg-amber-500 px-1.5 text-center text-[11px] font-bold text-white" data-testid="suggest-count">{sugCount}</span>}
+      <ChevronRight className={`h-4 w-4 shrink-0 text-slate-300 md:hidden ${k === 'suggest' && sugCount > 0 ? '' : 'ml-auto'}`} />
     </button>
   );
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/30" role="dialog" aria-modal="true" aria-label="Cài đặt">
       <div className="flex h-full w-full max-w-[1100px] flex-col bg-slate-50 shadow-2xl">
-        <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-3">
-          <SlidersHorizontal className="h-5 w-5 text-teal-600" />
-          <h2 className="text-lg font-bold text-navy-800">Cài đặt</h2>
+        <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3">
+          <SlidersHorizontal className="hidden h-5 w-5 text-teal-600 sm:block" />
+          <h2 className="shrink-0 whitespace-nowrap text-lg font-bold text-navy-800">Cài đặt</h2>
           {profName && (
-            <span className="chip border-navy-100 bg-navy-50 text-navy-800" data-testid="settings-profile" title="Nguồn tin, từ khóa & quy tắc, địa điểm, lĩnh vực, thời gian, chất lượng, báo cáo và hiệu năng thuộc riêng cấu hình này. Đổi cấu hình ở mục Cấu hình (profile).">
-              Cấu hình: <b className="ml-1">{profName}</b>
+            <span className="chip min-w-0 whitespace-nowrap border-navy-100 bg-navy-50 text-navy-800" data-testid="settings-profile" title="Nguồn tin, từ khóa & quy tắc, địa điểm, lĩnh vực, thời gian, chất lượng, báo cáo và hiệu năng thuộc riêng cấu hình này. Đổi cấu hình ở mục Cấu hình (profile).">
+              <span className="hidden sm:inline">Cấu hình:</span> <b className="truncate sm:ml-1">{profName}</b>
             </span>
           )}
           {api.mode === 'live' && api.shared && (
             <details className="relative" data-testid="shared-config-note">
-              <summary className="chip cursor-pointer list-none border-teal-200 bg-teal-50 text-teal-800 hover:bg-teal-100">
-                <Users className="h-3 w-3" /> Áp dụng cho cả nhóm <Info className="h-3 w-3" />
+              <summary className="chip cursor-pointer list-none whitespace-nowrap border-teal-200 bg-teal-50 text-teal-800 hover:bg-teal-100" aria-label="Áp dụng cho cả nhóm">
+                <Users className="h-3 w-3" /> <span className="hidden sm:inline">Áp dụng cho cả nhóm</span><span className="sm:hidden">Cả nhóm</span> <Info className="h-3 w-3" />
               </summary>
-              <div className="animate-in absolute left-0 z-10 mt-2 w-80 rounded-xl border border-slate-200 bg-white p-3 text-xs leading-relaxed text-slate-700 shadow-lg">
+              <div className="animate-in fixed left-3 right-3 top-14 z-10 mt-2 rounded-xl sm:absolute sm:left-0 sm:right-auto sm:top-auto sm:w-80 border border-slate-200 bg-white p-3 text-xs leading-relaxed text-slate-700 shadow-lg">
                 Cài đặt của cấu hình <b>{profName}</b> dùng chung cho cả nhóm: bấm <b>Lưu</b> (cần đăng nhập người duyệt) là áp dụng cho máy chủ thu thập từ lượt kế tiếp. Mỗi lần lưu được ghi vào lịch sử, có thể khôi phục. Riêng mẫu PPTX tải lên chỉ lưu trong trình duyệt này.
               </div>
             </details>
@@ -198,10 +207,10 @@ export function SettingsDrawer({ open, onClose, onSaved, initialSection }: { ope
           </div>
         )}
         <div className="flex min-h-0 flex-1">
-          <nav className="w-56 shrink-0 overflow-auto border-r border-slate-200 bg-white p-2">
+          <nav className={`${pane === 'detail' ? 'hidden' : 'flex-1'} overflow-auto bg-white p-3 md:block md:w-56 md:flex-none md:shrink-0 md:border-r md:border-slate-200 md:p-2`} data-testid="settings-nav">
             <div className="relative mb-2">
               <Search className="absolute left-2 top-2 h-3.5 w-3.5 text-slate-400" />
-              <input className="input pl-7 text-xs" placeholder="Tìm cài đặt…" value={filter} onChange={(e) => setFilter(e.target.value)} />
+              <input className="input pl-7 text-xs" type="search" placeholder="Tìm cài đặt…" value={filter} onChange={(e) => setFilter(e.target.value)} />
             </div>
             {/* one tree: every profile, the open one expanded with ALL its sections (overview, sources, rules, …) */}
             <div className="px-2 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">Cấu hình</div>
@@ -245,7 +254,11 @@ export function SettingsDrawer({ open, onClose, onSaved, initialSection }: { ope
               <Toggle checked={advanced} onChange={setAdvanced} label="Nâng cao" help="Hiện thêm các mục kỹ thuật: thời gian, chất lượng thu thập & ảnh, hiệu năng, sao lưu & lịch sử." />
             </div>
           </nav>
-          <main className="min-w-0 flex-1 overflow-auto p-4">
+          <main className={`${pane === 'list' ? 'hidden' : ''} min-w-0 flex-1 overflow-auto p-3 sm:p-4 md:block`}>
+            <button className="-mx-1 mb-2 flex items-center gap-1 rounded-lg px-1 py-1.5 text-[15px] font-medium text-teal-700 md:hidden" onClick={() => setPane('list')} data-testid="settings-back">
+              <ChevronLeft className="h-5 w-5" /> Các mục
+              <span className="ml-1 font-semibold text-navy-800">· {nav === 'newProfile' ? 'Tạo cấu hình mới' : NAV.find((n) => n[0] === nav)?.[1]}</span>
+            </button>
             {!s ? (
               <p>Đang tải…</p>
             ) : nav === 'profiles' || nav === 'newProfile' ? (
@@ -775,6 +788,22 @@ function UsersPanel() {
     }
   };
   if (!me) return <Section title="Tài khoản"><p className="text-sm text-slate-600">Đăng nhập để xem và đổi mật khẩu.</p></Section>;
+  const roleLabel = (r: UserRole) => (r === 'admin' ? 'Quản trị viên' : 'Người duyệt');
+  const actions = (x: UserInfo) => (
+    <>
+      <button className="btn-ghost px-2 py-1 text-xs" onClick={() => setForm({ u: x.u, name: x.name, password: '', role: x.role, editing: true })} aria-label={`Sửa tài khoản ${x.u}`}>Sửa</button>
+      <button
+        className="btn-ghost px-2 py-1 text-xs text-red-700"
+        disabled={busy || x.u === me.user}
+        aria-label={`Xoá tài khoản ${x.u}`}
+        onClick={() => {
+          if (confirm(`Xoá tài khoản "${x.u}"?`)) void run(async () => setUsers(await shared.deleteUser(x.u)), `Đã xoá ${x.u}`);
+        }}
+      >
+        Xoá
+      </button>
+    </>
+  );
   return (
     <div data-testid="users-panel">
       <Section title="Tài khoản của tôi">
@@ -784,11 +813,11 @@ function UsersPanel() {
         </p>
         {me.user ? (
           <div className="flex flex-wrap items-end gap-2">
-            <label className="block min-w-0 flex-1">
+            <label className="block w-full min-w-0 sm:w-auto sm:flex-1">
               <span className="label">Mật khẩu mới</span>
               <input className="input" type="password" autoComplete="new-password" value={myPw} onChange={(e) => setMyPw(e.target.value)} />
             </label>
-            <button className="btn-teal" disabled={busy || myPw.length < 6} onClick={() => void run(async () => { await shared.changePassword(myPw); setMyPw(''); }, 'Đã đổi mật khẩu')}>
+            <button className="btn-teal w-full justify-center sm:w-auto" disabled={busy || myPw.length < 6} onClick={() => void run(async () => { await shared.changePassword(myPw); setMyPw(''); }, 'Đã đổi mật khẩu')}>
               <Save className="h-4 w-4" /> Đổi mật khẩu
             </button>
           </div>
@@ -799,7 +828,20 @@ function UsersPanel() {
       {isAdmin && (
         <Section title="Quản lý tài khoản" help="Tài khoản dùng chung cho bản web, lưu trên máy chủ duyệt tin (mật khẩu được mã hoá một chiều). Quản trị viên quản lý tài khoản; người duyệt duyệt tin, thu thập và sửa cài đặt.">
           {err && <p className="text-xs text-red-700">{err}</p>}
-          <div className="overflow-x-auto">
+          {/* phones: one card per account */}
+          <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white sm:hidden" data-testid="users-list">
+            {(users ?? []).map((x) => (
+              <li key={x.u} className="flex items-center gap-3 px-3 py-2.5">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-700 text-sm font-semibold text-white" aria-hidden="true">{(x.name || x.u).trim().split(/\s+/).pop()!.charAt(0).toUpperCase()}</span>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate font-medium text-slate-800">{x.name}</div>
+                  <div className="truncate text-xs text-slate-500"><span className="font-mono">{x.u}</span> · {roleLabel(x.role)}</div>
+                </div>
+                <div className="flex shrink-0 gap-1">{actions(x)}</div>
+              </li>
+            ))}
+          </ul>
+          <div className="hidden overflow-x-auto sm:block">
             <table className="w-full text-sm" data-testid="users-table">
               <thead>
                 <tr className="text-left text-xs text-slate-500">
@@ -814,19 +856,8 @@ function UsersPanel() {
                   <tr key={x.u} className="border-t border-slate-100">
                     <td className="py-1.5 pr-3 font-mono">{x.u}</td>
                     <td className="py-1.5 pr-3">{x.name}</td>
-                    <td className="py-1.5 pr-3">{x.role === 'admin' ? 'Quản trị viên' : 'Người duyệt'}</td>
-                    <td className="py-1.5 text-right whitespace-nowrap">
-                      <button className="btn-ghost px-2 py-1 text-xs" onClick={() => setForm({ u: x.u, name: x.name, password: '', role: x.role, editing: true })}>Sửa</button>
-                      <button
-                        className="btn-ghost px-2 py-1 text-xs text-red-700"
-                        disabled={busy || x.u === me.user}
-                        onClick={() => {
-                          if (confirm(`Xoá tài khoản "${x.u}"?`)) void run(async () => setUsers(await shared.deleteUser(x.u)), `Đã xoá ${x.u}`);
-                        }}
-                      >
-                        Xoá
-                      </button>
-                    </td>
+                    <td className="py-1.5 pr-3">{roleLabel(x.role)}</td>
+                    <td className="py-1.5 text-right whitespace-nowrap">{actions(x)}</td>
                   </tr>
                 ))}
               </tbody>

@@ -4,10 +4,19 @@
 - Specification: v1.2
 - Milestones: **M0 DONE · M1 DONE · M2 DONE · M5 DONE (original template; PDF via Microsoft PowerPoint or LibreOffice, visually inspected)** · M3/M4 mostly done · M6 partial
 - Repository: https://github.com/tinbaochi/tinbaochi.github.io (renamed from tinbaochi/collector on 26/11/2026; branch `main`, public) · Live site: https://tinbaochi.github.io/ (real data, scheduled collection editable on the web + on-demand "Thu thập")
-- Last session: 2026-11-26 (session 14w) – site served at the root https://tinbaochi.github.io/
+- Last session: 2026-11-26 (session 14x) – phone layout of the web app
 - The user (GitHub `bccuong`) has authorised commits/pushes to this repo and GitHub Pages/Actions for this project.
 
-## ▶ RESUME HERE (session 14w – site at the root; 2026-11-26)
+## ▶ RESUME HERE (session 14x – phone layout; 2026-11-26)
+- User (iPhone screenshots): layouts on the phone not optimal. Audited every screen at 390 px with Playwright (Edge, isMobile/hasTouch) + a script listing elements wider than the screen.
+- Settings (web/src/Settings.tsx): phones = list of sections → one section full screen with "‹ Các mục" back (data-testid settings-nav / settings-back); desktop keeps two columns. Compact header ("Cả nhóm" chip, note popup fits the screen). Tài khoản: one card per account on phones (users-list), table from sm up.
+- Main page (web/src/App.tsx): tabs = 3 equal columns with short labels (CSS .short-label + data-short, full text kept for screen readers/tests); search full width; category chips one sideways-scrolling row (.scroll-row); story card: photo as a thumbnail beside the title, no empty "không có ảnh" box, actions in one row (Liên quan / Không / Chi tiết / 💡 / Loại); date fields fill the width; header compact (QR button hidden below 640 px – desktop tool for slides). Touch screens: buttons ≥ 40 px, small buttons ≥ 36 px, bigger checkboxes (index.css).
+- Hidden bug found: the header was wider than 390 px, which widened the whole page (every drawer shifted right). Now every audited screen is exactly 390 px wide.
+- Tests: typecheck OK, vitest 203/203, test:ui 14/14, test:ui:live 21/21 (new "phone layout (390 px)" test; tab assertions read aria-label).
+- NOT pushed: git push needs the user's permission this time (committed locally).
+- Next step: push, then the user checks on the iPhone (Safari) after the Pages deploy; then tidy the location rows in Địa điểm (delete button alone on its own line) and the Tổng quan profile row.
+
+## (history) Session 14w – site at the root; 2026-11-26)
 - User approved: repo tinbaochi/collector renamed to tinbaochi/tinbaochi.github.io (organisation site → served at https://tinbaochi.github.io/). vite base '/' for every mode; --site defaults, pages.yml, wrangler GITHUB_REPO, docs, tests, fake worker updated. web/public/404.html sends /collector/<rest>?q#h → /<rest>?q#h. git remote updated.
 - Tests: typecheck OK, vitest 203/203, test:ui:live 20/20 (base /). Commit 858ebcd pushed; Pages run 45748342194 success; Pages build_type=workflow at https://tinbaochi.github.io/. Worker 3e5cc244 deployed (GITHUB_REPO new name); /status 200, token not rejected (expires 2027-11-21).
 - Live (Edge): / shows the app; /collector/ and /collector/?x=1#h redirect to / with query+hash; bccuong.github.io/news-reporter/ still arrives (via /collector/ → /, two hops; its redirect repo was not edited).

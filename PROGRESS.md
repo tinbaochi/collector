@@ -13,8 +13,8 @@
 - Main page (web/src/App.tsx): tabs = 3 equal columns with short labels (CSS .short-label + data-short, full text kept for screen readers/tests); search full width; category chips one sideways-scrolling row (.scroll-row); story card: photo as a thumbnail beside the title, no empty "không có ảnh" box, actions in one row (Liên quan / Không / Chi tiết / 💡 / Loại); date fields fill the width; header compact (QR button hidden below 640 px – desktop tool for slides). Touch screens: buttons ≥ 40 px, small buttons ≥ 36 px, bigger checkboxes (index.css).
 - Hidden bug found: the header was wider than 390 px, which widened the whole page (every drawer shifted right). Now every audited screen is exactly 390 px wide.
 - Tests: typecheck OK, vitest 203/203, test:ui 14/14, test:ui:live 21/21 (new "phone layout (390 px)" test; tab assertions read aria-label).
-- NOT pushed: git push needs the user's permission this time (committed locally).
-- Next step: push, then the user checks on the iPhone (Safari) after the Pages deploy; then tidy the location rows in Địa điểm (delete button alone on its own line) and the Tổng quan profile row.
+- Pushed with the user's permission (a08be91): CI and Pages deploy success; live https://tinbaochi.github.io/ at 390 px (Edge): width 390, tabs on one row.
+- Next step: the user checks on the iPhone (Safari) after the Pages deploy; then tidy the location rows in Địa điểm (delete button alone on its own line) and the Tổng quan profile row.
 
 ## (history) Session 14w – site at the root; 2026-11-26)
 - User approved: repo tinbaochi/collector renamed to tinbaochi/tinbaochi.github.io (organisation site → served at https://tinbaochi.github.io/). vite base '/' for every mode; --site defaults, pages.yml, wrangler GITHUB_REPO, docs, tests, fake worker updated. web/public/404.html sends /collector/<rest>?q#h → /<rest>?q#h. git remote updated.

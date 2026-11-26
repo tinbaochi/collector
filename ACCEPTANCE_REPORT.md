@@ -3,7 +3,7 @@
 ## Session 14x changes in status (2026-11-26)
 | ID | Status | Evidence |
 |---|---|---|
-| UI – web app usable on a phone (390 px) | PASS (emulated) | Playwright Edge at 390×844 isMobile/hasTouch: home, Tùy chỉnh, Đổi giờ, Độ phủ & nguồn, Xem chi tiết, Hỏi nhanh, Xuất báo cáo, Kiểm tra and 8 Settings sections – document width 390 on every screen (was 391–405), screenshots reviewed. tests/ui-live "phone layout (390 px)": no horizontal overflow, tabs on one row, Settings list → section → back, accounts as cards. Real-iPhone check by the user pending. |
+| UI – web app usable on a phone (390 px) | PASS (emulated) | Playwright Edge at 390×844 isMobile/hasTouch: home, Tùy chỉnh, Đổi giờ, Độ phủ & nguồn, Xem chi tiết, Hỏi nhanh, Xuất báo cáo, Kiểm tra and 8 Settings sections – document width 390 on every screen (was 391–405), screenshots reviewed. tests/ui-live "phone layout (390 px)": no horizontal overflow, tabs on one row, Settings list → section → back, accounts as cards. Live site after deploy (a08be91): width 390, tabs on one row. Real-iPhone check by the user pending. |
 
 ## Session 14w changes in status (2026-11-26)
 | ID | Status | Evidence |
